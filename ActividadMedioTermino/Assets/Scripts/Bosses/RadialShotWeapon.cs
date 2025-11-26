@@ -76,11 +76,11 @@ public class RadialShotWeapon : MonoBehaviour
                         break;
 
                     case ShotType.Heart:
-                        ShotAttack.HeartShot(center, 1f, 80, 5f);
+                        ShotAttack.HeartShot(center, 1f, 40, 5f);
                         break;
 
                     case ShotType.Flower:
-                        ShotAttack.FlowerShot(center, 1.5f, 6, 120, 3f);
+                        ShotAttack.FlowerShot(center, 1.5f, 6, 60, 3f);
                         break;
                 }
 
