@@ -61,6 +61,9 @@ public class BulletPool : MonoBehaviour
         return _bulletPool[_bulletPool.Count - 1];
     }
 
-
+    public void ReleaseBullet(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(false);
+    }
 
 }

@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
 
     [SerializeField] private float speed;
+    [SerializeField] private float damage;
     private bool hit;
     private float direction;
     private float lifetime;
@@ -29,7 +30,7 @@ public class Bullet : MonoBehaviour
         //transform.Translate(movementSpeed, 0, 0);
 
         lifetime += Time.deltaTime;
-        if (lifetime > 5) 
+        if (lifetime > 1) 
             Deactivate();
         
     }
@@ -39,6 +40,11 @@ public class Bullet : MonoBehaviour
         hit = true;
         boxCollider.enabled = false;
         anim.SetTrigger("explode");
+
+        if(collision.tag == "Player")
+        {
+            collision.GetComponent<Health>().TakeDamage(damage);
+        }
     }
 
     public void SetDirection(float _direction)
@@ -60,6 +66,23 @@ public class Bullet : MonoBehaviour
     private void Deactivate()
     {
         lifetime = 0;
-        gameObject.SetActive(false);
+        hit = false;
+        boxCollider.enabled = true;
+        anim.ResetTrigger("explode");
+        if (BulletPool.Instance != null)
+            BulletPool.Instance.ReleaseBullet(this);
+        else
+            gameObject.SetActive(false);
     }
+
+    private void OnEnable()
+    {
+        BulletStats.AddEnemyBullet();
+    }
+
+    private void OnDisable()
+    {
+        BulletStats.RemoveEnemyBullet();
+    }
+
 }
